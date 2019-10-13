@@ -25,6 +25,10 @@ dependencies {
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testImplementation 'io.projectreactor:reactor-test'
 
-	    // thymeleaf template
-    implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
+	// thymeleaf template
+	implementation "org.springframework.boot:spring-boot-starter-thymeleaf"
+
+	// spring security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	testImplementation 'org.springframework.security:spring-security-test'
 }
