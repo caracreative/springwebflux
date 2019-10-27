@@ -1,13 +1,19 @@
 version: 2
 
 defaults: &defaults
-  working_directory: ~/repo
   docker:
     - image: circleci/openjdk:8-jdk
       environment:
         # Customize the JVM maximum heap limit
         JVM_OPTS: -Xmx3200m
         TERM: dumb
+
+references:
+  workspace_root: &workspace_root
+    /home/circleci/project
+  attach_workspace: &attach_workspace
+    attach_workspace:
+      at: *workspace_root
 
 jobs:
   prepare:
@@ -20,16 +26,16 @@ jobs:
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
             chmod +x ./tmp/cc-test-reporter
       - persist_to_workspace:
-          root: tmp
+          root: *workspace_root
           paths:
-            - cc-test-reporter
+            - .
 
   build:
     <<: *defaults
     steps:
       - checkout
-      - attach_workspace:
-          at: ~/repo/tmp
+
+      - *attach_workspace
 
       # Download and cache dependencies
       - restore_cache:
@@ -55,10 +61,9 @@ jobs:
       - run:
           name: Code climate with jacoco
           command: |
-            ls -la ./tmp
-            JACOCO_SOURCE_PATH=src/main/java ./tmp/cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco
+            JACOCO_SOURCE_PATH=src/main/java ./cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco
 
       - run:
           name: Upload code climate report
-          command: ./tmp/cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
+          command: ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
           when: on_success
