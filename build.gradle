@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.1.9.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'
 	id 'java'
+	id 'jacoco'
 }
 
 group = 'co.cara'
@@ -38,4 +39,25 @@ dependencies {
 	testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
   testCompile "org.mockito:mockito-core:2.+"
   testCompile('org.mockito:mockito-junit-jupiter:2.18.3')
+}
+
+jacoco {
+    toolVersion = "0.8.4"
+}
+
+jacocoTestReport {
+    reports {
+        xml.enabled = true
+        html.enabled = true
+    }
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(
+                dir: it, 
+                exclude: [
+                    'co/cara/springwebflux/Application.class'
+                ]
+            )
+        }))
+    }
 }
