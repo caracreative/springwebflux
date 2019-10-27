@@ -1,4 +1,5 @@
 version: 2
+
 defaults: &defaults
   working_directory: ~/repo
   docker:
@@ -9,10 +10,26 @@ defaults: &defaults
         TERM: dumb
 
 jobs:
+  prepare:
+    <<: *defaults
+    steps:
+      - run:
+          name: Download codeclimate test reporter
+          command: |
+            mkdir -p tmp/
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+            chmod +x ./tmp/cc-test-reporter
+      - persist_to_workspace:
+          root: tmp
+          paths:
+            - cc-test-reporter
+
   build:
     <<: *defaults
     steps:
       - checkout
+      - attach_workspace:
+          at: ~/repo/tmp
 
       # Download and cache dependencies
       - restore_cache:
@@ -21,12 +38,26 @@ jobs:
             # fallback to using the latest cache if no exact match is found
             - v1-dependencies-
 
-      - run: gradle dependencies
+      - run: 
+          name: Setup dependencies
+          command: gradle dependencies
 
       - save_cache:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
 
-      # run tests!
-      - run: gradle test
+      # build (by default, test) and generate test report
+      - run: 
+          name: Build, test and generate test report
+          command: gradle build jacocoTestReport
+
+      - run:
+          name: Code climate with jacoco
+          command: |
+            JACOCO_SOURCE_PATH=src/main/java ./tmp/cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco
+
+      - run:
+          name: Upload code climate report
+          command: ./tmp/cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
+          when: on_success
