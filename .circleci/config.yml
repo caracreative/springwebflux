@@ -50,7 +50,7 @@ jobs:
           name: Download codeclimate test reporter
           command: |
             curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
-            chmod +x ./cc-test-reporter
+            chmod +x ./tmp/cc-test-reporter
   
       - persist_to_workspace:
           root: *workspace_root
@@ -70,9 +70,9 @@ jobs:
       - run:
           name: Code climate with jacoco
           command: |
-            JACOCO_SOURCE_PATH=src/main/java ./cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco
+            JACOCO_SOURCE_PATH=src/main/java ./tmp/cc-test-reporter format-coverage ./build/reports/jacoco/test/jacocoTestReport.xml --input-type jacoco
 
       - run:
           name: Upload code climate report
-          command: ./cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
+          command: ./tmp/cc-test-reporter upload-coverage -r $CC_TEST_REPORTER_ID
           when: on_success
