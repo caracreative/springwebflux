@@ -20,22 +20,6 @@ jobs:
     <<: *defaults
     steps:
       - checkout
-      
-      - run:
-          name: Download codeclimate test reporter
-          command: |
-            mkdir -p tmp/
-            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
-            chmod +x ./tmp/cc-test-reporter
-      - persist_to_workspace:
-          root: *workspace_root
-          paths:
-            - .
-
-  build:
-    <<: *defaults
-    steps:
-      - *attach_workspace
 
       # Download and cache dependencies
       - restore_cache:
@@ -52,6 +36,22 @@ jobs:
           paths:
             - ~/.gradle
           key: v1-dependencies-{{ checksum "build.gradle" }}
+
+      - run:
+          name: Download codeclimate test reporter
+          command: |
+            curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./tmp/cc-test-reporter
+            chmod +x ./cc-test-reporter
+  
+      - persist_to_workspace:
+          root: *workspace_root
+          paths:
+            - .
+
+  build:
+    <<: *defaults
+    steps:
+      - *attach_workspace
 
       # build (by default, test) and generate test report
       - run: 
