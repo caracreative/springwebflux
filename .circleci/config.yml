@@ -15,6 +15,15 @@ references:
     attach_workspace:
       at: *workspace_root
 
+workflows:
+  version: 2
+  main:
+    jobs:
+      - prepare
+      - build:
+          requires:
+            - prepare
+
 jobs:
   prepare:
     <<: *defaults
