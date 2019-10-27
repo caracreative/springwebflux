@@ -1,8 +1,8 @@
-package com.calvinx.controller;
+package co.cara.controller;
 
 import static org.springframework.security.test.web.reactive.server.SecurityMockServerConfigurers.springSecurity;
 
-import com.calvinx.springwebflux.SpringwebfluxApplication;
+import co.cara.springwebflux.Application;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -18,7 +18,7 @@ import org.springframework.test.web.reactive.server.WebTestClient;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureWebTestClient
-@ContextConfiguration(classes = SpringwebfluxApplication.class)
+@ContextConfiguration(classes = Application.class)
 public class HomeTest {
 
   @Autowired

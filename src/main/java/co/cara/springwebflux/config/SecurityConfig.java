@@ -1,4 +1,4 @@
-package com.calvinx.springwebflux.config;
+package co.cara.springwebflux.config;
 
 import org.springframework.boot.autoconfigure.security.reactive.PathRequest;
 import org.springframework.context.annotation.Bean;

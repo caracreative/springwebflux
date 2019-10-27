@@ -1,13 +1,13 @@
-package com.calvinx.springwebflux;
+package co.cara.springwebflux;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class SpringwebfluxApplication {
+public class Application {
 
 	public static void main(String[] args) {
-		SpringApplication.run(SpringwebfluxApplication.class, args);
+		SpringApplication.run(Application.class, args);
 	}
 
 }
