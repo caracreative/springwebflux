@@ -18,6 +18,8 @@ configurations {
 
 repositories {
 	mavenCentral()
+	maven { url 'https://repo.spring.io/snapshot' }
+  maven { url 'https://repo.spring.io/milestone' }
 }
 
 dependencies {
@@ -32,6 +34,13 @@ dependencies {
 	// spring security
 	implementation 'org.springframework.boot:spring-boot-starter-security'
 	testImplementation 'org.springframework.security:spring-security-test'
+
+	// r2dbc library for database persistence
+	implementation 'org.springframework.data:spring-data-r2dbc:1.0.0.RC1'
+	implementation 'io.r2dbc:r2dbc-postgresql:1.0.0.M7'
+	runtimeOnly 'org.postgresql:postgresql'
+	implementation 'io.r2dbc:r2dbc-h2:1.0.0.M7'
+	runtimeOnly "com.h2database:h2"
 
 	// Mockito and JUnit 5
 	testImplementation('org.junit.jupiter:junit-jupiter-api:5.2.0')
