@@ -39,7 +39,6 @@ public class HomeTest {
 
   @Test
   public void home() {
-    System.out.println("Hello");
     this.client.get().uri("/").exchange().expectStatus().isOk();
   }
 
