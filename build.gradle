@@ -1,5 +1,5 @@
 plugins {
-	id 'org.springframework.boot' version '2.1.9.RELEASE'
+	id 'org.springframework.boot' version '2.2.4.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.9.RELEASE'
 	id 'java'
 	id 'jacoco'
@@ -34,8 +34,8 @@ dependencies {
 	testImplementation 'org.springframework.security:spring-security-test'
 
 	// Mockito and JUnit 5
-	testImplementation('org.junit.jupiter:junit-jupiter-api:5.2.0')
-  testCompile('org.junit.jupiter:junit-jupiter-params:5.2.0')
+	testImplementation('org.junit.jupiter:junit-jupiter-api:5.6.0')
+  testCompile('org.junit.jupiter:junit-jupiter-params:5.6.0')
 	testRuntime('org.junit.jupiter:junit-jupiter-engine:5.2.0')
   testCompile "org.mockito:mockito-core:2.+"
   testCompile('org.mockito:mockito-junit-jupiter:2.18.3')
