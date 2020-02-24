@@ -38,7 +38,7 @@ dependencies {
   testCompile('org.junit.jupiter:junit-jupiter-params:5.6.0')
 	testRuntime('org.junit.jupiter:junit-jupiter-engine:5.6.0')
   testCompile "org.mockito:mockito-core:2.+"
-  testCompile('org.mockito:mockito-junit-jupiter:3.2.4')
+  testCompile('org.mockito:mockito-junit-jupiter:3.3.0')
 }
 
 jacoco {
